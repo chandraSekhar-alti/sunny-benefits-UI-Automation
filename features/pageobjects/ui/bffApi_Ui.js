@@ -3,136 +3,166 @@ const fs = require("fs");
 const { assert } = require("chai");
 const utilTools = require("../../../utils/tools");
 require("dotenv").config();
-let bffApiData = require("../../../data/bffApiData.json");
+
+// Import data files
+const bffApiData = require("../../../data/bffApiData.json");
 const bffApiURL = require("../../../data/bffApiURL.json");
-const ConsumerAllTaskData = require(`../../../data/consumerAllTasks.json`);
-const cosumerDetailsdata = require(`../../../data/consumerDetails.json`);
-const TriviaRewardData = require(`../../../data/triviarewarddata.json`);
-let ApiAssertQues = require(`../../../data/QuestionAssert.json`);
+const ConsumerAllTaskData = require("../../../data/consumerAllTasks.json");
+const consumerDetailsData = require("../../../data/consumerDetails.json");
+const TriviaRewardData = require("../../../data/triviarewarddata.json");
+const ApiAssertQues = require("../../../data/QuestionAssert.json");
 
+class ConsumerTasks {
+    /**
+     * Gets all consumer tasks for UI
+     */
+    async getAllConsumerTask_UI() {
+        try {
+            const url = `${process.env.BFF_API_base_URL}v1/bff/get-all-consumer-tasks`;
+            console.log("API URL:", url);
+            console.log("Payload:", JSON.stringify(bffApiData.get_all_consumer_tasks_Api.currentPayload));
 
-// let consumerDetailsData = require("../../../data/consumerDetails.json");
+            const response = await this.makeApiRequest(url, 'POST', bffApiData.get_all_consumer_tasks_Api.currentPayload);
+            
+            await this.validateResponse(response);
+            await this.extractAndSaveTaskRewardId(response);
 
-class consumerTasks {
-  async getAllConsumerTask_UI() {
-    //bffApiURL.get_all_consumer_tasks_api_urlInteg=
-    let url =  process.env.BFF_API_base_URL + "v1/bff/get-all-consumer-tasks";
-    //fs.writeFileSync(
-    //  `${process.cwd()}\\data\\bffApiURL.json`,
-     // JSON.stringify(bffApiURL)
-    //);
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$ " + url)
-    console.log("%%%%%%%%%%%%%%%%%%%%%%%%% " +JSON.stringify(bffApiData.get_all_consumer_tasks_Api.currentPayload))
-    const response = await axios.post(
-      await url, JSON.stringify(bffApiData.get_all_consumer_tasks_Api.currentPayload),
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${bffApiData.authToken}`,
-        },
-      }
-    );
-    this.response = response;
-    console.log("All consumer task API Response Status : " + response.status);
-    assert.equal(
-      response.status,
-      "200",
-      "successfully validated response code"
-    );
-    // await browser.pause(10000);
-    // console.log(
-    //   "@@@@@@@@@@@@@@@@@@@@@@@@@: " + (await JSON.stringify(response.data))
-    // );
-    await browser.pause(6000);
-    console.log(
-      "@@@@@@@@@@@@@@@@@@@@@@@@@: " +
-        (await JSON.stringify(
-          response.data.pendingTasks[0].taskReward.taskRewardId
-        ))
-    );
-    ConsumerAllTaskData.triviaRewardId =
-      response.data.pendingTasks[0].taskReward.taskRewardId;
+        } catch (error) {
+            console.error("Error in getAllConsumerTask_UI:", error.message);
+            throw error;
+        }
+    }
 
-    fs.writeFileSync(
-      `${process.cwd()}\\data\\consumerAllTasks.json`,
-      JSON.stringify(ConsumerAllTaskData)
-    );
-  }
+    /**
+     * Makes API request for task reward ID
+     */
+    async taskRewardIdApi() {
+        try {
+            const url = this.constructTriviaRewardUrl();
+            console.log("Trivia Reward URL:", url);
 
-  async taskRewardIdApi() {
-    bffApiURL.get_trivia_rewardId =
-      process.env.BFF_API_base_URL +
-      `v1/trivia/${ConsumerAllTaskData.triviaRewardId}?consumerCode=${cosumerDetailsdata.consumerCode}`;
-    fs.writeFileSync(
-      `${process.cwd()}\\data\\bffApiURL.json`,
-      JSON.stringify(bffApiURL)
-    );
-    console.log(
-      "############################## : " + bffApiURL.get_trivia_rewardId
-    );
-    const response = await axios.get(bffApiURL.get_trivia_rewardId, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${bffApiData.authToken}`,
-      },
-    });
-    this.response = response;
-    console.log("All consumer task API Response Status : " + response.status);
-    assert.equal(
-      response.status,
-      "200",
-      "successfully validated response code"
-    );
-    // TriviaRewardData.questions=JSON.stringify(response.data.questions);
-    fs.writeFileSync(
-      `${process.cwd()}\\data\\triviarewarddata.json`,
-      JSON.stringify(response.data.questions)
-    );
-      await browser.pause(8000);
-      let questions_0 = await TriviaRewardData[0].triviaJson;
-      let quesVal_0 = questions_0.replace(/\\/g, "");
-      const jsonData_0 = JSON.parse(quesVal_0);
-      console.log("#######################: " + jsonData_0.questionText);
-      ApiAssertQues.question_0 = jsonData_0.questionText;
-      ApiAssertQues.options_0 = jsonData_0.answerText;
-      ApiAssertQues.answer_0 = jsonData_0.correctAnswer;
-      
-      let questions_1 = await TriviaRewardData[1].triviaJson;
-      let quesVal_1 = questions_1.replace(/\\/g, "");
-      const jsonData_1 = JSON.parse(quesVal_1);
-      console.log("#######################: " + jsonData_1.questionText);
-      ApiAssertQues.question_1 = jsonData_1.questionText;
-      ApiAssertQues.options_1 = jsonData_1.answerText;
-      ApiAssertQues.answer_1 = jsonData_1.correctAnswer;
-   
-      let questions_2 = await TriviaRewardData[2].triviaJson;
-      let quesVal_2 = questions_2.replace(/\\/g, "");
-      const jsonData_2 = JSON.parse(quesVal_2);
-      console.log("#######################: " + jsonData_2.questionText);
-      ApiAssertQues.question_2 = jsonData_2.questionText;
-      ApiAssertQues.options_2 = jsonData_2.answerText;
-      ApiAssertQues.answer_2 = jsonData_2.correctAnswer;
-    
-      let questions_3 = await TriviaRewardData[3].triviaJson;
-      let quesVal_3 = questions_3.replace(/\\/g, "");
-      const jsonData_3 = JSON.parse(quesVal_3);
-      console.log("#######################: " + jsonData_3.questionText);
-      ApiAssertQues.question_3 = jsonData_3.questionText;
-      ApiAssertQues.options_3 = jsonData_3.answerText;
-      ApiAssertQues.answer_3 = jsonData_3.correctAnswer;
-    
-      // let questions_4 = await TriviaRewardData[4].triviaJson;
-      // let quesVal_4 = questions_4.replace(/\\/g, "");
-      // const jsonData_4 = JSON.parse(quesVal_4);
-      // console.log("#######################: " + jsonData_4.questionText);
-      // ApiAssertQues.question_4 = jsonData_4.questionText;
-      // ApiAssertQues.options_4 = jsonData_4.answerText;
-      // ApiAssertQues.answer_4 = jsonData_4.correctAnswer;
-      fs.writeFileSync(
-        `${process.cwd()}\\data\\QuestionAssert.json`,
-        JSON.stringify(ApiAssertQues)
-      );
-  }
+            const response = await this.makeApiRequest(url, 'GET');
+            
+            await this.validateResponse(response);
+            await this.processAndSaveTriviaData(response.data.questions);
+
+        } catch (error) {
+            console.error("Error in taskRewardIdApi:", error.message);
+            throw error;
+        }
+    }
+
+    /**
+     * Makes an API request with given parameters
+     */
+    async makeApiRequest(url, method, payload = null) {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${bffApiData.authToken}`
+            }
+        };
+
+        if (method === 'POST') {
+            return await axios.post(url, JSON.stringify(payload), config);
+        }
+        return await axios.get(url, config);
+    }
+
+    /**
+     * Validates API response
+     */
+    async validateResponse(response) {
+        assert.equal(response.status, 200, "Failed to validate response code");
+        console.log("API Response Status:", response.status);
+    }
+
+    /**
+     * Extracts and saves task reward ID
+     */
+    async extractAndSaveTaskRewardId(response) {
+        await browser.pause(6000);
+        
+        const taskRewardId = response.data.pendingTasks[0].taskReward.taskRewardId;
+        console.log("Task Reward ID:", taskRewardId);
+        
+        ConsumerAllTaskData.triviaRewardId = taskRewardId;
+        
+        await this.saveJsonToFile(
+            `${process.cwd()}/data/consumerAllTasks.json`,
+            ConsumerAllTaskData
+        );
+    }
+
+    /**
+     * Constructs trivia reward URL
+     */
+    constructTriviaRewardUrl() {
+        const url = `${process.env.BFF_API_base_URL}v1/trivia/${ConsumerAllTaskData.triviaRewardId}?consumerCode=${consumerDetailsData.consumerCode}`;
+        
+        bffApiURL.get_trivia_rewardId = url;
+        this.saveJsonToFile(`${process.cwd()}/data/bffApiURL.json`, bffApiURL);
+        
+        return url;
+    }
+
+    /**
+     * Processes and saves trivia data
+     */
+    async processAndSaveTriviaData(questions) {
+        await this.saveJsonToFile(
+            `${process.cwd()}/data/triviarewarddata.json`,
+            questions
+        );
+
+        await browser.pause(8000);
+        await this.processQuestions();
+    }
+
+    /**
+     * Processes trivia questions
+     */
+    async processQuestions() {
+        for (let i = 0; i <= 3; i++) {
+            const questionData = await this.processQuestionData(i);
+            this.updateApiAssertQues(i, questionData);
+        }
+
+        await this.saveJsonToFile(
+            `${process.cwd()}/data/QuestionAssert.json`,
+            ApiAssertQues
+        );
+    }
+
+    /**
+     * Processes individual question data
+     */
+    async processQuestionData(index) {
+        const questionJson = TriviaRewardData[index].triviaJson;
+        const cleanedJson = questionJson.replace(/\\/g, "");
+        return JSON.parse(cleanedJson);
+    }
+
+    /**
+     * Updates API assert questions
+     */
+    updateApiAssertQues(index, jsonData) {
+        ApiAssertQues[`question_${index}`] = jsonData.questionText;
+        ApiAssertQues[`options_${index}`] = jsonData.answerText;
+        ApiAssertQues[`answer_${index}`] = jsonData.correctAnswer;
+    }
+
+    /**
+     * Saves JSON data to file
+     */
+    async saveJsonToFile(filePath, data) {
+        try {
+            await fs.promises.writeFile(filePath, JSON.stringify(data));
+        } catch (error) {
+            console.error(`Error saving file ${filePath}:`, error);
+            throw error;
+        }
+    }
 }
 
-module.exports = new consumerTasks();
+module.exports = new ConsumerTasks();
