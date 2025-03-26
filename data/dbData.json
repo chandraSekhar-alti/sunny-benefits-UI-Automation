@@ -1,0 +1,12 @@
+{
+  "Rewards_Wallet_Code": {
+    "Reward": "wat-2d62dcaf2aa4424b9ff6c2ddb5895077",
+    "Health_Actions_Sweepstakes_Entries": "wat-c3b091232e974f98aeceb495d2a9f916"
+  },
+  "Master_Wallet_Code":{
+    "Master_Reward": "wat-2d62dcaf2aa4424b9ff6c2ddb5895077",
+    "Master_Sweepstakes_Entries": "wat-c3b091232e974f98aeceb495d2a9f916",
+    "Master_Reward_Redemption": "wat-274bd71345804f09928cf451dc0f6239",
+    "Master_Sweepstakes_Entries_Redemption": "wat-e2c6076b59db46febd8d76fd019ae0b0"
+  }
+}

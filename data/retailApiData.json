@@ -1,0 +1,23 @@
+{
+  "productsApiPayload": {
+    "messageName": "DemoApril185pm",
+    "timestamp": "2024-04-10T17:14:36.2434381Z",
+    "sendingApplication": "adevretail4",
+    "batchid": 122444,
+    "trackingid": "04/05/2024 11:44:36",
+    "item": {
+      "company": 232,
+      "upcNumber": "upc9876511",
+      "upcIndicator": 12311,
+      "Action": "INSERT",
+      "data": {
+        "deptName": "Test_deptName_1",
+        "manufacturer": "Test_manufacturer_1",
+        "prodName": "Test_prodname_1",
+        "prodSize": 33,
+        "UOM": "Test_2uom2221_1",
+        "pkgSize": "Test_pkgSize_10"
+      }
+    }
+  }
+}

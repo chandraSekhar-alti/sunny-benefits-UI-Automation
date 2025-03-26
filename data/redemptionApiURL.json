@@ -1,0 +1,6 @@
+{
+  "on_session_api_url": "https://redemption.qa.sunnyrewards.com/api/v1/prizeout/on-session",
+  "balance_api_url": "https://redemption.qa.sunnyrewards.com/api/v1/prizeout/balance",
+  "success_Api_base_Url": "https://redemption.qa.sunnyrewards.com/api/v1/prizeout/success",
+  "fail_Api_base_Url": "https://redemption.qa.sunnyrewards.com/api/v1/prizeout/fail"
+}

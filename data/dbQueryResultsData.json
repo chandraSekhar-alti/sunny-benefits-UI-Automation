@@ -1,0 +1,47 @@
+{
+  "person_id": "107339",
+  "tenant_config_json": {
+    "purseConfig": {
+      "purses": [
+        {
+          "purseLabel": "FOD",
+          "walletType": "wat-35d4rt62d77y6119a6t730c9b6447457",
+          "purseNumber": "1234",
+          "purseWalletType": "wat-35b3ac62d74b4119a5f630c9b6446035",
+          "masterWalletType": "wat-35d4rt62d77y6119a6t730c9b6447457",
+          "masterRedemptionWalletType": "wat-01b4a568c1814449b64168bb434127b7"
+        },
+        {
+          "purseLabel": "OTC",
+          "walletType": "wat-4b364fg722f04034cv732b355d84f479",
+          "purseNumber": "12456777",
+          "purseWalletType": "wat-4b364ed612f04034bf732b355d84f368",
+          "masterWalletType": "wat-4b364fg722f04034cv732b355d84f479",
+          "masterRedemptionWalletType": "wat-bc8f4f7c028d479f900f0af794e385c8"
+        },
+        {
+          "purseLabel": "REW",
+          "walletType": "wat-2d62dcaf2aa4424b9ff6c2ddb5895077",
+          "purseNumber": "19088",
+          "purseWalletType": "wat-55f05107b41642c39e7a3b459223cbd8",
+          "masterWalletType": "wat-2d62dcaf2aa4424b9ff6c2ddb5895077",
+          "masterRedemptionWalletType": "wat-274bd71345804f09928cf451dc0f6239"
+        },
+        {
+          "purseLabel": "UTILITY",
+          "walletType": "wat-5ec72c2b2867407b913e28283777ebdf",
+          "purseNumber": "1900980981",
+          "purseWalletType": "wat-cb5eff3b86114410ad3fdce38d2b4001",
+          "masterWalletType": "wat-5ec72c2b2867407b913e28283777ebdf",
+          "masterRedemptionWalletType": "wat-22c1f94f535341f5ace684aed2a24cab"
+        }
+      ]
+    },
+    "fisProgramDetail": {
+      "clientId": "1253772",
+      "companyId": "1204185",
+      "packageId": "726547",
+      "subprogramId": "874551"
+    }
+  }
+}

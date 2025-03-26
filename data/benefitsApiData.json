@@ -1,0 +1,305 @@
+{
+  "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjFwSlpPT09OY1Jxam4xREhiY2FwRyJ9.eyJodHRwczovL3d3dy5zdW5ueXJld2FyZHMuY29tL2FwcF9tZXRhZGF0YSI6eyJjb25zdW1lckNvZGUiOiJjbXItYjhhYjc2OGNkYmQ2NGNhYWE2OTJlNWM5OGNkZjUxOTUiLCJlbnYiOiJRYSIsInBvc3RhbENvZGUiOiIwMzA2MiIsInJvbGUiOiJzdWJzY3JpYmVyIiwidGVuYW50Q29kZSI6InRlbi1lY2FkYTIxZTU3MTU0OTI4YTJiYjk1OWU4MzY1YjhiNCJ9LCJpc3MiOiJodHRwczovL2Rldi1zdW5ueS1iZW5lZml0cy51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjY5MTM2Njg0YjFhMmU1NzcwZDhiZTgxIiwiYXVkIjpbImh0dHBzOi8vZGV2LXN1bm55LWJlbmVmaXRzLnVzLmF1dGgwLmNvbS9hcGkvdjIvIiwiaHR0cHM6Ly9kZXYtc3VubnktYmVuZWZpdHMudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTcyMzE5MzA5MywiZXhwIjoxNzIzMjc5NDkzLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiYXpwIjoiWkxMN1RrejFBRnM3cElVT09wVTFoSVJMdW94bnFqR0gifQ.HfRr5QMn8qUvKiHer2bZAPJGiIpsWCdHGm4-EiA4QJNJOb_oK-V0IEQtjJrTXREw87XCzLPt1YnhtF-qr43Fs0HQ4TCv8qmCmnZVETFl9y_cbZNaIaZoDZL1UMm3wNBoCYWS35YZX9mVaKflWOhezcK14faC4H4IKezQ7zNlUgwGDCNmMaLcH2QjUhWzlhq56LxifqZy6I5mcuyIYnbpZHU35knY1xCW-3HH1BTBMcb_K4QOT3po2MyIcH39Exw7M9Yx91Wed3QjAqvuJMRw95BnLhdTse3tA7hOHLDlNJyzQFfwBM9ovv5TTdg0bBshcb2obmt60A8IQqOtfCaWaQ",
+  "consumercode": "cmr-b8ab768cdbd64caaa692e5c98cdf5195",
+  "tenantCode": "ten-ecada21e57154928a2bb959e8365b8b4",
+  "getConsumerByEmailApi": {
+    "payload": {
+      "email": "test2@yopmail.com"
+    }
+  },
+  "get-tenant-by-consumer-code": {
+    "payload": {
+      "consumerCode": ""
+    }
+  },
+  "walletApi": {
+    "currentPayload": {
+      "consumerCode": "cmr-b8ab768cdbd64caaa692e5c98cdf5195"
+    }
+  },
+  "transactionApi": {
+    "currentPayload": {
+      "consumerCode": "cmr-b8ab768cdbd64caaa692e5c98cdf5195",
+      "walletId": 0,
+      "isRewardAppTransactions": true
+    }
+  },
+  "wallet": {
+    "walletId": 1140,
+    "walletTypeId": 1,
+    "customerCode": "cus-954843d6ec9442778ed9226556dd843c",
+    "tenantCode": "ten-ecada21e57154928a2bb959e8365b8b4",
+    "walletCode": "wal-9bc67415622e441da370edc86d802a6b",
+    "balance": 245,
+    "earnMaximum": 250,
+    "totalEarned": 250,
+    "pendingTasksTotalRewardAmount": 0,
+    "leftToEarn": 0
+  },
+  "transactions": {
+    "Today": [],
+    "ThisMonth": [],
+    "previous": [
+      {
+        "transaction": {
+          "transactionId": 9783,
+          "walletId": 1140,
+          "transactionCode": "txn-6a7476d7cf094b31a5188da15d542cbe",
+          "transactionType": "A",
+          "previousBalance": 205,
+          "transactionAmount": 40,
+          "balance": 245,
+          "prevWalletTxnCode": "1140:txn-be773f45069d479a9858248abfe2fa20",
+          "transactionDetailId": 5418,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        },
+        "transactionDetail": {
+          "transactionDetailId": 5418,
+          "transactionDetailType": "REWARD",
+          "consumerCode": "cmr-fd37b638c2584d7b8c6880e494f71b48",
+          "taskRewardCode": "trw-c95c643f080248a081986545f1766fb5",
+          "notes": null,
+          "redemptionRef": null,
+          "redemptionItemDescription": null,
+          "rewardDescription": "Reduce Stress -Talk it Out",
+          "isSpouse": false,
+          "isDependent": false,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        }
+      },
+      {
+        "transaction": {
+          "transactionId": 9780,
+          "walletId": 1140,
+          "transactionCode": "txn-be773f45069d479a9858248abfe2fa20",
+          "transactionType": "S",
+          "previousBalance": 210,
+          "transactionAmount": 5,
+          "balance": 205,
+          "prevWalletTxnCode": "1140:txn-284161f538314480894a785a507a75ca",
+          "transactionDetailId": 5417,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        },
+        "transactionDetail": {
+          "transactionDetailId": 5417,
+          "transactionDetailType": "REDEMPTION",
+          "consumerCode": "cmr-fd37b638c2584d7b8c6880e494f71b48",
+          "taskRewardCode": null,
+          "notes": null,
+          "redemptionRef": "PRIZEOUT:0ffd8826-db39-4b36-96dc-24f6a7a58058",
+          "redemptionItemDescription": "rue21 US Gift Card",
+          "rewardDescription": null,
+          "isSpouse": false,
+          "isDependent": false,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        }
+      },
+      {
+        "transaction": {
+          "transactionId": 6243,
+          "walletId": 1140,
+          "transactionCode": "txn-284161f538314480894a785a507a75ca",
+          "transactionType": "A",
+          "previousBalance": 160,
+          "transactionAmount": 50,
+          "balance": 210,
+          "prevWalletTxnCode": "1140:txn-908beac6987b4b838bc1019473ad51b3",
+          "transactionDetailId": 3251,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        },
+        "transactionDetail": {
+          "transactionDetailId": 3251,
+          "transactionDetailType": "REWARD",
+          "consumerCode": "cmr-fd37b638c2584d7b8c6880e494f71b48",
+          "taskRewardCode": "trw-d69c711bbd2e407aa7515ea38d0449b0",
+          "notes": null,
+          "redemptionRef": null,
+          "redemptionItemDescription": null,
+          "rewardDescription": "You've earned it - Take PTO",
+          "isSpouse": false,
+          "isDependent": false,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        }
+      },
+      {
+        "transaction": {
+          "transactionId": 6239,
+          "walletId": 1140,
+          "transactionCode": "txn-908beac6987b4b838bc1019473ad51b3",
+          "transactionType": "A",
+          "previousBalance": 110,
+          "transactionAmount": 50,
+          "balance": 160,
+          "prevWalletTxnCode": "1140:txn-3e23dcb2d5a2450d962d409ce4138e3b",
+          "transactionDetailId": 3249,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        },
+        "transactionDetail": {
+          "transactionDetailId": 3249,
+          "transactionDetailType": "REWARD",
+          "consumerCode": "cmr-fd37b638c2584d7b8c6880e494f71b48",
+          "taskRewardCode": "trw-36bd3f5e82fb4e18b468bc7e12793bd0",
+          "notes": null,
+          "redemptionRef": null,
+          "redemptionItemDescription": null,
+          "rewardDescription": "Go Virtual",
+          "isSpouse": false,
+          "isDependent": false,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        }
+      },
+      {
+        "transaction": {
+          "transactionId": 6158,
+          "walletId": 1140,
+          "transactionCode": "txn-3e23dcb2d5a2450d962d409ce4138e3b",
+          "transactionType": "A",
+          "previousBalance": 60,
+          "transactionAmount": 50,
+          "balance": 110,
+          "prevWalletTxnCode": "1140:txn-ba61732cdf0740098afe8f9d95d8ba0f",
+          "transactionDetailId": 3207,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        },
+        "transactionDetail": {
+          "transactionDetailId": 3207,
+          "transactionDetailType": "REWARD",
+          "consumerCode": "cmr-fd37b638c2584d7b8c6880e494f71b48",
+          "taskRewardCode": "trw-8a154edc602c49efb210d67a7bfe22b4",
+          "notes": null,
+          "redemptionRef": null,
+          "redemptionItemDescription": null,
+          "rewardDescription": "Schedule your annual wellness visit",
+          "isSpouse": false,
+          "isDependent": false,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        }
+      },
+      {
+        "transaction": {
+          "transactionId": 6100,
+          "walletId": 1140,
+          "transactionCode": "txn-ba61732cdf0740098afe8f9d95d8ba0f",
+          "transactionType": "A",
+          "previousBalance": 50,
+          "transactionAmount": 10,
+          "balance": 60,
+          "prevWalletTxnCode": "1140:txn-7a822b371f464364b3f19eb0441c5454",
+          "transactionDetailId": 3178,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        },
+        "transactionDetail": {
+          "transactionDetailId": 3178,
+          "transactionDetailType": "REWARD",
+          "consumerCode": "cmr-fd37b638c2584d7b8c6880e494f71b48",
+          "taskRewardCode": "trw-0ea336c4ae964b57a556879bc61827f4",
+          "notes": null,
+          "redemptionRef": null,
+          "redemptionItemDescription": null,
+          "rewardDescription": "Spinwheel",
+          "isSpouse": false,
+          "isDependent": false,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        }
+      },
+      {
+        "transaction": {
+          "transactionId": 6098,
+          "walletId": 1140,
+          "transactionCode": "txn-7a822b371f464364b3f19eb0441c5454",
+          "transactionType": "A",
+          "previousBalance": 0,
+          "transactionAmount": 50,
+          "balance": 50,
+          "prevWalletTxnCode": "1140:init",
+          "transactionDetailId": 3177,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        },
+        "transactionDetail": {
+          "transactionDetailId": 3177,
+          "transactionDetailType": "REWARD",
+          "consumerCode": "cmr-fd37b638c2584d7b8c6880e494f71b48",
+          "taskRewardCode": "trw-49e06ba414284f81b106a790bf65740d",
+          "notes": null,
+          "redemptionRef": null,
+          "redemptionItemDescription": null,
+          "rewardDescription": "Play Monthly Trivia",
+          "isSpouse": false,
+          "isDependent": false,
+          "createTs": "0001-01-01T00:00:00",
+          "updateTs": "0001-01-01T00:00:00",
+          "createUser": "",
+          "updateUser": "",
+          "deleteNbr": 0
+        }
+      }
+    ]
+  },
+  "findStoreApi": {
+    "currentPayload": {
+      "coords": {
+        "accuracy": 0,
+        "altitude": 0,
+        "altitudeAccuracy": 0,
+        "heading": 0,
+        "latitude": 33.038188,
+        "longitude": -96.708372,
+        "speed": 0
+      },
+      "mocked": true,
+      "timestamp": 0
+    }
+  }
+}

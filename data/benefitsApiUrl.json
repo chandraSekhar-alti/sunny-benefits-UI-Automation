@@ -1,0 +1,7 @@
+{
+  "get_consumers_by_email": "https://benefits-api.qa.sunnyrewards.com/api/v1/get-consumers-by-email?email=maxinesenger%40yopmail.com",
+  "get_tenant_by_consumer_code_url": "https://benefits-api.qa.sunnyrewards.com/api/v1/get-tenant-by-consumer-code?consumerCode=cmr-edf5932d0e20411ca20ad41dc16215ce",
+  "walletAPiUrl": "https://benefits-api.qa.sunnyrewards.com/api/v1/wallets",
+  "transactionsApiUrl": "https://benefits-api.qa.sunnyrewards.com/api/v1/transactions",
+  "find_store_url": "https://benefits-api.qa.sunnyrewards.com/api/v1/find-store"
+}
