@@ -1,212 +1,206 @@
-const fs = require("fs");
-const { expect , assert} = require("chai");
+const { expect, assert } = require("chai");
+const UIActions = require('../../../utils/UIActions');
+const Assertions = require('../../../utils/Assertions');
 const benefitsData = require("../../../data/UIBenefitsData.json");
 
-class BenefitsSettingPage{
-
-    profileNameText(profileName){
-        return $(`//div[text()='${profileName}']`);
-    }
-    mailIdText(){
-        return $(`//div[text()='Harry']/parent::div/div[2]`);
-    }
-    personalText(){
-        return $(`//div[text()='Personal']`);
-    }
-    personalHeader(){
-        return $(`(//div[text()='Personal'])[2]`);
-    }
-    nameText(){
-        return $(`//div[text()='Name']`);
-    }
-    nameValueText(){
-        return $(`//div[text()='Name']/following-sibling::div`);
-    }
-    emailText(){
-        return $(`//div[text()='Email']`);
-    }
-    emailValueText(){
-        return $(`//div[text()='Email']/following-sibling::div`);
-    }
-    personalPageBackBtn(){
-        return $(`//div[text()='Email']/parent::div/parent::div/parent::div/div[1]/div`);
-    }
-    notificationsText(){
-        return $(`//div[text()='Notifications']`);
-    }
-    notificationsHeaderText(){
-        return $(`(//div[text()='Notifications'])[2]`);
-    }
-    whatNotificationReceiveHeader(){
-        return $(`//div[text()='What notifications you receive']`);
-    }
-    whereNotificationReceiveHeader(){
-        return $(`//div[text()='Where you receive notification']`);
-    }
-    whatNotificationRewardsHeader(){
-        return $(`//div[text()='What notifications you receive']/parent::div//div[text()='Rewards']`);
-    }
-    whatNotificationDepositsText(){
-        return $(`//div[text()='What notifications you receive']/parent::div//div[text()='Deposits']`);
-    }
-    whatNotificationTransactionText(){
-        return $(`//div[text()='What notifications you receive']/parent::div//div[text()='Transactions']`);
-    }
-    whatNotificationPromotionText(){
-        return $(`//div[text()='What notifications you receive']/parent::div//div[text()='Promotions']`);
-    }
-    whatNotificationSecurityText(){
-        return $(`//div[text()='What notifications you receive']/parent::div//div[text()='Security']`);
-    }
-    whereNotificationPushText(){
-        return $(`//div[text()='Push']`);
-    }
-    whereNotificationEmailText(){
-        return $(`//div[text()='Email']`);
-    }
-    whereNotificationSmsText(){
-        return $(`//div[text()='SMS']`);
-    }
-    notificationsBackBtn(){
-        return $(`(//div[text()='Notifications']/parent::div/div[1]/div)[2]`);
-    }
-    deviceText(){
-        return $(`//div[text()='Devices']`);
-    }
-    deviceHeaderText(){
-        return $(`(//div[text()='Devices'])[2]`);
-    }
-    devicesGoogleFit(){
-        return $(`//div[text()='Google Fit']`);
-    }
-    devicesAppleHealthKit(){
-        return $(`//div[text()='Apple Health Kit']`);
-    }
-    devicesBackBtn(){
-        return $(`//div[text()='Devices']/parent::div/div[1]/div[1]/div`);
-    }
-    manageCardText(){
-        return $(`//div[text()='Manage Card']`);
-    }
-    manageCardHeaderText(){
-        return $(`(//div[text()='Manage Card'])[2]`);
-    }
-    replaceCardText(){
-        return $(`//div[text()='Replace Card']`);
-    }
-    freezeCardText(){
-        return $(`//div[text()='Freeze Card']`);
-    }
-    manageCardBackBtn(){
-        return $(`//div[text()='Manage Card']/parent::div/div[1]/div/button`);
+class BenefitsSettingPage {
+    // Organized selectors by functionality
+    selectors = {
+        profile: {
+            nameText: (profileName) => $(`//div[text()='${profileName}']`),
+            mailIdText: () => $(`//div[text()='Harry']/parent::div/div[2]`),
+            nameValueText: () => $(`//div[text()='Name']/following-sibling::div`),
+            emailValueText: () => $(`//div[text()='Email']/following-sibling::div`)
+        },
+        personal: {
+            text: () => $(`//div[text()='Personal']`),
+            header: () => $(`(//div[text()='Personal'])[2]`),
+            nameText: () => $(`//div[text()='Name']`),
+            emailText: () => $(`//div[text()='Email']`),
+            backBtn: () => $(`//div[text()='Email']/parent::div/parent::div/parent::div/div[1]/div`)
+        },
+        notifications: {
+            text: () => $(`//div[text()='Notifications']`),
+            headerText: () => $(`(//div[text()='Notifications'])[2]`),
+            whatReceiveHeader: () => $(`//div[text()='What notifications you receive']`),
+            whereReceiveHeader: () => $(`//div[text()='Where you receive notification']`),
+            rewardsHeader: () => $(`//div[text()='What notifications you receive']/parent::div//div[text()='Rewards']`),
+            depositsText: () => $(`//div[text()='What notifications you receive']/parent::div//div[text()='Deposits']`),
+            transactionText: () => $(`//div[text()='What notifications you receive']/parent::div//div[text()='Transactions']`),
+            promotionText: () => $(`//div[text()='What notifications you receive']/parent::div//div[text()='Promotions']`),
+            securityText: () => $(`//div[text()='What notifications you receive']/parent::div//div[text()='Security']`),
+            pushText: () => $(`//div[text()='Push']`),
+            emailText: () => $(`//div[text()='Email']`),
+            smsText: () => $(`//div[text()='SMS']`),
+            backBtn: () => $(`(//div[text()='Notifications']/parent::div/div[1]/div)[2]`)
+        },
+        devices: {
+            text: () => $(`//div[text()='Devices']`),
+            headerText: () => $(`(//div[text()='Devices'])[2]`),
+            googleFit: () => $(`//div[text()='Google Fit']`),
+            appleHealthKit: () => $(`//div[text()='Apple Health Kit']`),
+            backBtn: () => $(`//div[text()='Devices']/parent::div/div[1]/div[1]/div`)
+        },
+        manageCard: {
+            text: () => $(`//div[text()='Manage Card']`),
+            headerText: () => $(`(//div[text()='Manage Card'])[2]`),
+            replaceCardText: () => $(`//div[text()='Replace Card']`),
+            freezeCardText: () => $(`//div[text()='Freeze Card']`),
+            backBtn: () => $(`//div[text()='Manage Card']/parent::div/div[1]/div/button`)
+        }
     }
 
-    async profileNameVal(){
-        await this.profileNameText(benefitsData.profileNameData).waitForDisplayed({ timeout:15000 });
+    /**
+     * Validates profile name
+     */
+    async profileNameVal() {
+        const element = this.selectors.profile.nameText(benefitsData.profileNameData);
+        await UIActions.waitForElementDisplayed(element, 15000);
         await browser.pause(4000);
-        const isDisplayed = await this.profileNameText(benefitsData.profileNameData).isDisplayed();
-        expect(isDisplayed).to.be.true;
+        await Assertions.assertElementIsVisible(element);
     }
 
-    async mailIdVal(){
-        await this.mailIdText().waitForDisplayed({ timeout:15000 });
+    /**
+     * Validates mail ID
+     */
+    async mailIdVal() {
+        const element = this.selectors.profile.mailIdText();
+        await UIActions.waitForElementDisplayed(element, 15000);
         await browser.pause(4000);
-        const isDisplayed = await this.mailIdText().isDisplayed();
-        expect(isDisplayed).to.be.true;
+        await Assertions.assertElementIsVisible(element);
     }
 
-    async personalTextVal(){
-        await this.personalText().waitForDisplayed({ timeout:15000 });
+    /**
+     * Validates personal text
+     */
+    async personalTextVal() {
+        const element = this.selectors.personal.text();
+        await UIActions.waitForElementDisplayed(element, 15000);
         await browser.pause(4000);
-        const isDisplayed = await this.personalText().isDisplayed();
-        expect(isDisplayed).to.be.true;
+        await Assertions.assertElementIsVisible(element);
     }
 
-    async personalLinkVal(){
-        await this.personalText().click();
-        await this.personalHeader().waitForDisplayed({ timeout:15000 });
+    /**
+     * Validates personal link
+     */
+    async personalLinkVal() {
+        await UIActions.clickElement(this.selectors.personal.text());
+        const headerElement = this.selectors.personal.header();
+        await UIActions.waitForElementDisplayed(headerElement, 15000);
         await browser.pause(4000);
-        const isDisplayed = await this.personalHeader().isDisplayed();
-        expect(isDisplayed).to.be.true;
-        const nameIsDisplayed = await this.personalHeader().isDisplayed();
-        expect(nameIsDisplayed).to.be.true;
-        let profileName = await this.nameValueText().getText();
+        
+        await Assertions.assertElementIsVisible(headerElement);
+        await Assertions.assertElementIsVisible(this.selectors.personal.nameText());
+        
+        const profileName = await this.selectors.profile.nameValueText().getText();
         assert.equal(profileName, benefitsData.profileNameData);
-        const emailIsDisplayed = await this.personalHeader().isDisplayed();
-        expect(emailIsDisplayed).to.be.true;
-        let profileEmail = await this.emailValueText().getText();
+        
+        await Assertions.assertElementIsVisible(this.selectors.personal.emailText());
+        const profileEmail = await this.selectors.profile.emailValueText().getText();
         assert.equal(profileEmail, benefitsData.profileEmailData);
     }
 
-    async navigateToSettingsPage(){
-        await this.personalPageBackBtn().waitForDisplayed({ timeout:15000 });
-        await this.personalPageBackBtn().click();
+    /**
+     * Navigates to settings page
+     */
+    async navigateToSettingsPage() {
+        const backBtn = this.selectors.personal.backBtn();
+        await UIActions.waitForElementDisplayed(backBtn, 15000);
+        await UIActions.clickElement(backBtn);
     }
 
-    async notificationsTextVal(){
+    /**
+     * Validates notifications text
+     */
+    async notificationsTextVal() {
+        const element = this.selectors.notifications.text();
         await browser.pause(4000);
-        await this.notificationsText().waitForDisplayed({ timeout:15000 });
+        await UIActions.waitForElementDisplayed(element, 15000);
         await browser.pause(4000);
-        const isDisplayed = await this.notificationsText().isDisplayed();
-        expect(isDisplayed).to.be.true;
+        await Assertions.assertElementIsVisible(element);
     }
 
-    async notificationLinkVal(){
+    /**
+     * Validates notifications link
+     */
+    async notificationLinkVal() {
         await browser.pause(2000);
-        await this.notificationsText().click();
-        await this.notificationsHeaderText().waitForDisplayed({ timeout:15000 });
+        await UIActions.clickElement(this.selectors.notifications.text());
+        
+        const headerElement = this.selectors.notifications.headerText();
+        await UIActions.waitForElementDisplayed(headerElement, 15000);
         await browser.pause(4000);
-        const isDisplayed = await this.notificationsHeaderText().isDisplayed();
-        expect(isDisplayed).to.be.true;
-        expect(await this.whatNotificationReceiveHeader().isDisplayed()).to.be.true;
-        expect(await this.whatNotificationRewardsHeader().isDisplayed()).to.be.true;
-        expect(await this.whatNotificationDepositsText().isDisplayed()).to.be.true;
-        expect(await this.whatNotificationTransactionText().isDisplayed()).to.be.true;
-        expect(await this.whatNotificationPromotionText().isDisplayed()).to.be.true;
-        expect(await this.whatNotificationSecurityText().isDisplayed()).to.be.true;
-       // await browser.pause(65000);
-        expect(await this.whereNotificationReceiveHeader().isDisplayed()).to.be.true;
-        await this.whereNotificationPushText().scrollIntoView();
-        expect(await this.whereNotificationPushText().isDisplayed()).to.be.true;
-        expect(await this.whereNotificationEmailText().isDisplayed()).to.be.true;
-        expect(await this.whereNotificationSmsText().isDisplayed()).to.be.true;
-        await this.notificationsBackBtn().click();
+        
+        await Assertions.assertElementIsVisible(headerElement);
+        await Assertions.assertElementIsVisible(this.selectors.notifications.whatReceiveHeader());
+        await Assertions.assertElementIsVisible(this.selectors.notifications.rewardsHeader());
+        await Assertions.assertElementIsVisible(this.selectors.notifications.depositsText());
+        await Assertions.assertElementIsVisible(this.selectors.notifications.transactionText());
+        await Assertions.assertElementIsVisible(this.selectors.notifications.promotionText());
+        await Assertions.assertElementIsVisible(this.selectors.notifications.securityText());
+        await Assertions.assertElementIsVisible(this.selectors.notifications.whereReceiveHeader());
+        
+        await UIActions.scrollToElement(this.selectors.notifications.pushText());
+        await Assertions.assertElementIsVisible(this.selectors.notifications.pushText());
+        await Assertions.assertElementIsVisible(this.selectors.notifications.emailText());
+        await Assertions.assertElementIsVisible(this.selectors.notifications.smsText());
+        
+        await UIActions.clickElement(this.selectors.notifications.backBtn());
     }
 
-    async devicesTextVal(){
-        await this.deviceText().waitForDisplayed({ timeout:15000 });
+    /**
+     * Validates devices text
+     */
+    async devicesTextVal() {
+        const element = this.selectors.devices.text();
+        await UIActions.waitForElementDisplayed(element, 15000);
         await browser.pause(4000);
-        const isDisplayed = await this.deviceText().isDisplayed();
-        expect(isDisplayed).to.be.true;
-    }
-    async devicesLinkeVal(){
-        await this.deviceText().click();
-        await this.deviceHeaderText().waitForDisplayed({ timeout:15000 });
-        await browser.pause(4000);
-        const isDisplayed = await this.deviceHeaderText().isDisplayed();
-        expect(isDisplayed).to.be.true;
-        expect(await this.devicesGoogleFit().isDisplayed()).to.be.true;
-        expect(await this.devicesAppleHealthKit().isDisplayed()).to.be.true;
-        await this.devicesBackBtn().click();
+        await Assertions.assertElementIsVisible(element);
     }
 
-    async manageCardTextVal(){
-        await this.manageCardText().waitForDisplayed({ timeout:15000 });
+    /**
+     * Validates devices link
+     */
+    async devicesLinkeVal() {
+        await UIActions.clickElement(this.selectors.devices.text());
+        
+        const headerElement = this.selectors.devices.headerText();
+        await UIActions.waitForElementDisplayed(headerElement, 15000);
         await browser.pause(4000);
-        const isDisplayed = await this.manageCardText().isDisplayed();
-        expect(isDisplayed).to.be.true;
+        
+        await Assertions.assertElementIsVisible(headerElement);
+        await Assertions.assertElementIsVisible(this.selectors.devices.googleFit());
+        await Assertions.assertElementIsVisible(this.selectors.devices.appleHealthKit());
+        
+        await UIActions.clickElement(this.selectors.devices.backBtn());
     }
 
-    async manageCardLinkeVal(){
-        await this.manageCardText().click();
-        await this.manageCardHeaderText().waitForDisplayed({ timeout:15000 });
+    /**
+     * Validates manage card text
+     */
+    async manageCardTextVal() {
+        const element = this.selectors.manageCard.text();
+        await UIActions.waitForElementDisplayed(element, 15000);
         await browser.pause(4000);
-        const isDisplayed = await this.manageCardHeaderText().isDisplayed();
-        expect(isDisplayed).to.be.true;
-        expect(await this.replaceCardText().isDisplayed()).to.be.true;
-        expect(await this.freezeCardText().isDisplayed()).to.be.true;
-        await this.manageCardBackBtn().click();
-        await this.manageCardText().waitForDisplayed({ timeout:15000 });
+        await Assertions.assertElementIsVisible(element);
+    }
+
+    /**
+     * Validates manage card link
+     */
+    async manageCardLinkeVal() {
+        await UIActions.clickElement(this.selectors.manageCard.text());
+        
+        const headerElement = this.selectors.manageCard.headerText();
+        await UIActions.waitForElementDisplayed(headerElement, 15000);
+        await browser.pause(4000);
+        
+        await Assertions.assertElementIsVisible(headerElement);
+        await Assertions.assertElementIsVisible(this.selectors.manageCard.replaceCardText());
+        await Assertions.assertElementIsVisible(this.selectors.manageCard.freezeCardText());
+        
+        await UIActions.clickElement(this.selectors.manageCard.backBtn());
+        await UIActions.waitForElementDisplayed(this.selectors.manageCard.text(), 15000);
     }
 }
 

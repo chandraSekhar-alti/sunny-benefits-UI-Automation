@@ -1,108 +1,106 @@
-//const Page = require('../../pageobjects/ui/page');
 const BffApiData = require("../../../data/bffApiData.json");
-const { assert } = require("chai");
-const argv = require('yargs').argv;
-const uiActions = require('../../../utils/UIActions');
-const  Assertions  = require("../../../utils/Assertions");
-// const uiActions = new UIActions();
-/**
- * sub page containing specific selectors and methods for a specific page
- */
+const UIActions = require('../../../utils/UIActions');
+const Assertions = require("../../../utils/Assertions");
+
 class LoginPage {
-  ftue() {
-    return $(`//button[text()='Get Started']`);
-  }
-  triviaClose() {
-    return $(`//img[@alt='cross_icon']`);
-  }
-  actionsForYou() {
-    return $(`//h5[text()='Play Monthly Trivia']`);
-  }
-  playNow() {
-    return $(`//button[text()='Play Now!']`);
-  }
-  tryAgainBtn() {
-    return (`//button[contains(text(),'Try again')]`);
-  }
-  userName() {
-    return $(`//input[@id='username']`)
-  }
-  password() {
-    return $(`//input[@id='password']`)
-  }
-  signInBtn() {
-    return $(`//button[@type='submit']`)
-  }
-  continue() {
-    return $(`//div[text()='Continue']`)
-  }
-
-  async open(consumerCode) {
-    browser.maximizeWindow();
-    await browser.pause(2000);
-    //onst url = argv.baseUrl+ `sdk?consumer-code=${consumerCode}`;
-    //await browser.url(url);
-    //console.log("!!!!!!!!!!!!!!!!!! :" + url)
-    var path = `https://app.qa.sunnyrewards.com/sdk?consumer-code=${consumerCode}`;
-    browser.url(path);
-    await browser.pause(5000);
-  }
-
-  async syncIssue() {
-    try {
-      if (await this.tryAgainBtn().isDisplayed() == true) {
-        await browser.refresh();
-      }
-    } catch (error) {
-      console.log("syncIssue not handled with the error : " + error);
+    // Organized selectors by functionality
+    selectors = {
+        navigation: {
+            ftue: () => $(`//button[text()='Get Started']`),
+            triviaClose: () => $(`//img[@alt='cross_icon']`),
+            tryAgainBtn: () => $(`//button[contains(text(),'Try again')]`)
+        },
+        trivia: {
+            actionsForYou: () => $(`//h5[text()='Play Monthly Trivia']`),
+            playNow: () => $(`//button[text()='Play Now!']`)
+        },
+        login: {
+            userName: () => $(`//input[@id='username']`),
+            password: () => $(`//input[@id='password']`),
+            signInBtn: () => $(`//button[@type='submit']`),
+            continue: () => $(`//div[text()='Continue']`)
+        }
     }
-  }
 
-  async getStarted() {
-    await browser.pause(2000);
-    await this.ftue().click();
-  }
+    /**
+     * Opens the application with a specific consumer code
+     * @param {string} consumerCode - The consumer code to use
+     */
+    async open(consumerCode) {
+        await browser.maximizeWindow();
+        const path = `https://app.qa.sunnyrewards.com/sdk?consumer-code=${consumerCode}`;
+        await UIActions.launchUrl(path);
+    }
 
-  async triviaPopupClose() {
-    await browser.pause(2000);
-    await this.ftue().click();
-    await browser.pause(5000);
-    await this.triviaClose().click();
-    await browser.pause(2000);
-  }
+    /**
+     * Handles sync issues by refreshing if needed
+     */
+    async syncIssue() {
+        try {
+            const tryAgainBtn = this.selectors.navigation.tryAgainBtn();
+            if (await tryAgainBtn.isDisplayed()) {
+                await browser.refresh();
+                await UIActions.waitForPageLoad();
+            }
+        } catch (error) {
+            console.log("Sync issue not handled with error: ", error);
+        }
+    }
 
-  async selectTriviaTask() {
-    await browser.pause(4000);
-    await this.actionsForYou().scrollIntoView()
-    await this.actionsForYou().click();
-    await browser.pause(8000);
-    await this.playNow().click();
-    await browser.pause(10000);
-  }
+    /**
+     * Clicks the Get Started button
+     */
+    async getStarted() {
+        await UIActions.clickElement(this.selectors.navigation.ftue());
+    }
 
-  async openAuthUrl_signIn(URL, UsrName, Psd) {
-    browser.maximizeWindow();
-    await browser.pause(4000);
-    await browser.url(URL);
-    await browser.pause(1000);
-    await this.userName().setValue(UsrName);
-    await this.password().setValue(Psd);
-    await this.signInBtn().click();
-    await browser.pause(10000);
-  }
-  async continueSignIn(URL, UsrName, Psd) {
+    /**
+     * Closes the trivia popup
+     */
+    async triviaPopupClose() {
+        await UIActions.clickElement(this.selectors.navigation.ftue());
+        await UIActions.clickElement(this.selectors.navigation.triviaClose());
+    }
 
-    await uiActions.launchUrl(URL);
-    await uiActions.clickElement(this.continue());
-    await uiActions.sendText(this.userName(), UsrName);
-    await uiActions.sendText(this.password(), Psd);
-    await uiActions.clickElement(this.signInBtn());
+    /**
+     * Selects and starts the trivia task
+     */
+    async selectTriviaTask() {
+        const actionsForYou = this.selectors.trivia.actionsForYou();
+        await UIActions.scrollToElement(actionsForYou);
+        await UIActions.clickElement(actionsForYou);
+        await UIActions.clickElement(this.selectors.trivia.playNow());
+    }
 
-    const dashboardUrl = "https://app.qa.sunnybenefits.com/Home";
-    await Assertions.validateUrl(dashboardUrl, 60000);
+    /**
+     * Signs in using direct URL
+     * @param {string} URL - The URL to navigate to
+     * @param {string} UsrName - Username
+     * @param {string} Psd - Password
+     */
+    async openAuthUrl_signIn(URL, UsrName, Psd) {
+        await UIActions.launchUrl(URL);
+        await UIActions.sendText(this.selectors.login.userName(), UsrName);
+        await UIActions.sendText(this.selectors.login.password(), Psd);
+        await UIActions.clickElement(this.selectors.login.signInBtn());
+    }
 
-    console.log("Logged in successfully");
-  }
+    /**
+     * Signs in using continue flow
+     * @param {string} URL - The URL to navigate to
+     * @param {string} UsrName - Username
+     * @param {string} Psd - Password
+     */
+    async continueSignIn(URL, UsrName, Psd) {
+        await UIActions.launchUrl(URL);
+        await UIActions.clickElement(this.selectors.login.continue());
+        await UIActions.sendText(this.selectors.login.userName(), UsrName);
+        await UIActions.sendText(this.selectors.login.password(), Psd);
+        await UIActions.clickElement(this.selectors.login.signInBtn());
+
+        const dashboardUrl = "https://app.qa.sunnybenefits.com/Home";
+        await Assertions.validateUrl(dashboardUrl, 60000);
+    }
 }
 
 module.exports = new LoginPage();
